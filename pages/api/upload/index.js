@@ -23,14 +23,14 @@ export default async function handler(request, response) {
 
   const [fields, files] = await form.parse(request);
 
-  const file = files.file[0];
+  const file = files.cover[0];
   const { newFilename, filepath } = file;
 
   // now we have the information about the image, we can send it to cloudinary
 
   const result = await cloudinary.v2.uploader.upload(filepath, {
     public_id: newFilename,
-    folder: "nf",
+    folder: "nf example",
   });
 
   console.log("result from cloudinary: ", result);

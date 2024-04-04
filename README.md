@@ -1,37 +1,31 @@
-# New Next Project
+# Cloudinary Upload example
+This example shows how to upload images to the [Cloudinary](https://cloudinary.com/) cloud service.
 
-This project was created from the neue fische `next` template.
 
-You can [🔗 **use this template on CodeSandbox**](https://codesandbox.io/p/sandbox/github/neuefische/web-exercises/tree/main/templates/next?file=/README.md) or locally by running this command in your Terminal:
+## Cloud architecture
+It's easy to store strings and numbers into a MongoDB database, not so much doing the same with images as they are [binary data](https://en.wikipedia.org/wiki/Binary_file).
 
-```bash
-npx -y ghcd@latest neuefische/web-exercises/tree/main/templates/next my-app -i
-```
+One could upload them to the public folder of the next project and make them available like other public assets. This would lead to multiple problems, namely:
 
-## Development
+- the project filesystem is volatile, gets recreated on every Vercel deployment and the files would be deleted;
+- even so, having a single server for images, api and the React app may overload the whole thing.
 
-### Local Development
+Relying on a third party service is a good solution.
 
-To work locally, please install the dependencies using `npm i` first.
+## Registering to Cloudinary
 
-Run `npm run dev` to start a development server and open the displayed URL in a browser.
+- Signup at [Cloudinary](https://cloudinary.com/) first.
+- Once you are in, note down the Cloud Name from the console:
+  Note: image
+- Then go to the settings page, into the Upload section, and edit the `ml_default` signing mode to Unsigned:
+-  Note: image
 
-Use `npm run test` to run the tests.
 
-### CodeSandbox Cloud
+## Configuring Cloudinary for the browser
+Add a `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` variable in your `.env.local` file with the cloud name you registered from your Cloudinary Dashboard.
 
-Select the "Preview: 3000" tab to view this project.
+[This will expose the variable in your frontend code](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser), like:
 
-Select the "Tests: logs" tab to view the tests.
-
-> The `npm run dev` and `npm run test` scripts run automatically.
-
-### Scripts
-
-You can use the following commands:
-
-- `npm run dev` to start a development server
-- `npm run build` to build the project
-- `npm run start` to start a production server
-- `npm run test` to run the tests
-- `npm run lint` to run the linter
+```js
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+``
