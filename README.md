@@ -130,12 +130,11 @@ export const config = {
 
 - Write a handler function that uses formidable to parse the request object and use that data to send our image file to Cloudinary.
 
-```js copy showLineNumbers
+```js
 export default async function handler(request, response) {
   // ensure this route can only be used for POST requests
   if (request.method !== "POST") {
-    response.status(400).json({ message: "Method not allowed" });
-    return;
+    return response.status(400).json({ message: "Method not allowed" });
   }
 
    // we initialize formidable with an empty options object
